@@ -1,0 +1,14 @@
+{
+  "name": "node_endpoint",
+  "version": "1.0.0",
+  "description": "Node.js Endpoint For keithmackay.com",
+  "main": "index.js",
+  "scripts": {},
+  "author": "Keith MacKay",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mathjs": "^3.7.0"
+  }
+}
