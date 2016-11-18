@@ -1,5 +1,15 @@
+var jsFormatter = require('js-beautify');
+
 const _ = {};
 
+_.prettyPrint = function (str) {
+    try {
+        if (str) return jsFormatter.js_beautify(str);
+        else return '';
+    } catch (err) {
+        _.log('Error Pretty Printing JS', err);
+    }
+};
 _.s = function (o) { return (typeof o === 'object') ? JSON.stringify(o, null, 4) : o; }
 _.log = function (a, b, c, d) {
     const t = function (o) {

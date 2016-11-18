@@ -13,15 +13,22 @@ router.post('/', function (request, response, next) {
                     // Use the math API
                     var mathQuery = data.query;
                     var answer = math.eval(mathQuery);
-                    _.log(_.s({
-                        question: mathQuery,
-                        answer: answer
-                    }));
+                    answer = answer === Infinity ? '&infin;' : answer;
                     response.status(200).json({
                         question: mathQuery,
                         answer: answer
                     });
-                    break;
+                    _.log("Math Query", _.s({
+                        question: mathQuery,
+                        answer: answer
+                    }));
+                    return;
+                case 'formatMath':
+                    var str = data.str;
+                    var formatStr = _.prettyPrint(str);
+
+                    response.json({ formatted: formatStr });
+                    return;
             }
         } else {
             if (data) _.log('Data', _.s(data))
