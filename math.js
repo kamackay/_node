@@ -26,7 +26,10 @@ router.post('/', function (request, response, next) {
                 case 'formatMath':
                     var str = data.str;
                     var formatStr = _.prettyPrint(str);
-
+                    _.log('Request To Pretty Print Math String', _.s({
+                        original: str,
+                        formatted: formatStr
+                    }));
                     response.json({ formatted: formatStr });
                     return;
             }
