@@ -17,14 +17,10 @@ router.get('/*', function holidayReq(request, response, next) {
             console.log('year', year);
             var hols = getHolidays(month, year);
             _.log(hols);
-        } else if (urlInfo.length >= 1 && urlInfo[0].length === 4) {
-            // Only a year was given
-console.log('Only Year');
-
         } else {
-            // Return all holidays this year
             var h = [];
-            var year = new Date().getFullYear();
+            var year = (urlInfo.length >= 1 && urlInfo[0].length === 4)
+                ? parseInt(urlInfo[0]) : new Date().getFullYear();
             for (var i = 0; i < 12; i++)
                 h = h.concat(getHolidays(i, year));
             _.log('All Holidays in ' + year.toString(), h);
