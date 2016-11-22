@@ -38,9 +38,9 @@ router.post('/', function (request, response, next) {
             _.log('Received Unknown request format');
             response.status(400).send('Unsure what to do with this request');
         }
-    } catch (err) {
-        _.log(err.message);
-        response.status(500).json(err);
+    } catch (e) {
+        _.err(e);
+        response.status(500).json(e);
     }
 });
 

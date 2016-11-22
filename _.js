@@ -39,12 +39,12 @@ _.serialize = function (o) {
     var s = '?'; Object.keys(o).forEach(function (k) { s += _.encode(k) + '=' + _.encode(o[k]); });
     return s;
 }
-_.combineObj = function (a, b, overwrite = true) {
+_.combineObj = function (a, b, overwrite) {
     Object.keys(a).forEach(function (k) {
         if (overwrite || !a[k]) a[k] = b[k];
     });
     return a;
-}
+};
 
 
 module.exports = _;
