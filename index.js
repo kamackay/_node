@@ -1,8 +1,11 @@
-var modules = {};
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
-modules.math = require('./math');
+var modules = {
+    math: require('./math'),
+    format: require('./format')
+};
+
 const _ = require('./_');
 
 app.use(function (req, res, next) {
@@ -15,6 +18,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.use('/math', modules.math);
+app.use('/format', modules.format);
 
 app.listen(5000, function () {
     _.log('UMA Client now running on port 5000\n');

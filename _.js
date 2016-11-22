@@ -2,6 +2,10 @@ var jsFormatter = require('js-beautify');
 
 const _ = {};
 
+_.err = function (err) {
+    if (typeof err !== 'undefined')
+        _.log('Unexpected Error', _.s(err));
+};
 _.prettyPrint = function (str) {
     try {
         if (str) return jsFormatter.js_beautify(str);
