@@ -16,6 +16,7 @@ router.get('/*', function holidayReq(request, response, next) {
             var year = (urlInfo.length >= 2) ? parseInt(urlInfo[1]) : new Date().getFullYear();
             console.log('year', year);
             var hols = getHolidays(month, year);
+            response.json(hols);
             _.log(hols);
         } else {
             var h = [];
@@ -24,6 +25,7 @@ router.get('/*', function holidayReq(request, response, next) {
             for (var i = 0; i < 12; i++)
                 h = h.concat(getHolidays(i, year));
             _.log('All Holidays in ' + year.toString(), h);
+            response.json(h);
         }
     } catch (e) {
         _.err(e);
