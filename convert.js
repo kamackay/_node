@@ -3,7 +3,7 @@ var app = express();
 var math = require('mathjs');
 var router = express.Router();
 const _ = require('./_');
-var request = require('request');
+var request = require('request').defaults({ encoding: null });
 
 router.post(['*', '/', '/*'], function (request, response, next) {
     try {
@@ -13,8 +13,9 @@ router.post(['*', '/', '/*'], function (request, response, next) {
                 case 'image':
                     var url = data.url;
                     convertImageToBase64(url, function (data) {
-                        var o = { url: url, data64: data }; 
-                        resp.json(o); _.l(o);
+                        var o = { url: url, data64: data };
+                        response.json(o);
+                        _.log(o);
                     });
                     return;
             }
@@ -30,10 +31,12 @@ router.post(['*', '/', '/*'], function (request, response, next) {
 });
 
 function convertImageToBase64(url, func) {
-    request.get('http://tinypng.org/images/example-shrunk-8cadd4c7.png', function (error, response, body) {
+    request.get(url, function (error, response, body) {
         if (!error && response.statusCode == 200) {
             data = "data:" + response.headers["content-type"] + ";base64," + new Buffer(body).toString('base64');
             if (typeof func === 'function') func(data);
+        } else {
+            _.l('Error');
         }
     });
 }

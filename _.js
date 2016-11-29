@@ -16,13 +16,19 @@ _.prettyPrint = function (str) {
 };
 _.s = function (o) { return (typeof o === 'object') ? JSON.stringify(o, null, 4) : o; }
 _.log = function (a, b, c, d) {
+    // Shorten the variable so that nothing printed is too large
+    const s = function (o) {
+        if (o && typeof o === 'string' && o.length > 100000)
+            return (o.substr(5000) + '...');
+        else return o;
+    };
     const t = function (o) {
         switch (typeof o) {
             case 'undefined':
                 return;
             case 'string':
-                return o;
-            case 'object': return _.s(o);
+                return s(o);
+            case 'object': return s(_.s(o));
         }
     }
     if (!d) {
