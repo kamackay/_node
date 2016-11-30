@@ -6,7 +6,7 @@ var router = express.Router();
 var staticData = require('./data/holidays.json');
 
 // router.post('/', holidayReq);
-router.get('/*', function holidayReq(request, response, next) {
+router.get('/*', function (request, response, next) {
     try {
         var urlS = request.url.split('/'), urlInfo = [];
         for (var i = 0; i < urlS.length; i++)

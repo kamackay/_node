@@ -69,6 +69,11 @@ _.sendJSON = function (resp, obj) {
     resp.json(obj);
 }
 _.isArray = function (o) { return Array.isArray(o); }
-
+_.randInt = function (min, max) {
+    return Math.floor((Math.random() * (max - min + 1)) + min);
+}
+_.randNum = function (min, max) {
+    return (Math.random() * (max - min + 1)) + min;
+}
 
 module.exports = _;

@@ -5,7 +5,8 @@ var modules = {
     math: require('./math'),
     format: require('./format'),
     holidays: require('./holidays'),
-    convert: require('./convert')
+    convert: require('./convert'),
+    utils: require('./utils')
 };
 const _ = require('./_');
 const router = express.Router();
@@ -18,7 +19,7 @@ app.use(function (req, res, next) {
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
+app.use(bodyParser.json());
 _.keys(modules).forEach(function (key) {
     app.use('/' + key, modules[key]);
     _.log('Loaded Module "' + key + '"');
