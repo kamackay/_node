@@ -1,6 +1,6 @@
 var jsFormatter = require('js-beautify');
 
-const _ = {};
+const _ = { version: '1.0.1' };
 
 _.err = function (err) {
     if (typeof err !== 'undefined')
@@ -42,7 +42,7 @@ _.log = function (a, b, c, d) {
 }
 _.encode = encodeURIComponent;
 _.serialize = function (o) {
-    var s = '?'; Object.keys(o).forEach(function (k) { s += _.encode(k) + '=' + _.encode(o[k]); });
+    var s = '?'; _.keys(o).forEach(function (k) { s += _.encode(k) + '=' + _.encode(o[k]); });
     return s;
 }
 _.combineObj = function (a, b, overwrite) {
@@ -51,6 +51,24 @@ _.combineObj = function (a, b, overwrite) {
     });
     return a;
 };
+_.getDateStr = function (date) {
+    date = date || new Date();
+    return (date.getFullYear() + "-" + (date.getMonth() + 1).toString() + "-" + date.getDate() + " "
+        + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+}
+_.keys = function (obj) {
+    return (typeof obj === 'object' ? Object.keys(obj) : []);
+}
+_.each = function (arr, func) {
+    if (typeof arr !== 'array' || typeof func !== 'function') return;
+    arr.forEach(func);
+}
+_.sendJSON = function (resp, obj) {
+    if (typeof obj !== 'object') return;
+    obj.appVersion = _.version;
+    resp.json(obj);
+}
+_.isArray = function (o) { return Array.isArray(o); }
 
 
 module.exports = _;

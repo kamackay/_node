@@ -14,7 +14,7 @@ router.post('/', function (request, response, next) {
                     var mathQuery = data.query;
                     var answer = math.eval(mathQuery);
                     answer = answer === Infinity ? '&infin;' : answer;
-                    response.status(200).json({
+                    _.sendJSON(response, {
                         question: mathQuery,
                         answer: answer
                     });
@@ -30,7 +30,7 @@ router.post('/', function (request, response, next) {
                         original: str,
                         formatted: formatStr
                     }));
-                    response.json({ formatted: formatStr });
+                    _.sendJSON(response, { formatted: formatStr });
                     return;
             }
         } else {

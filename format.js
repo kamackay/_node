@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var router = express.Router();
+var uglifyJS = require('uglify-js');
 const _ = require('./_');
 
 router.post('/', function (request, response, next) {
@@ -15,7 +16,7 @@ router.post('/', function (request, response, next) {
                         original: str,
                         formatted: formatStr
                     }));
-                    response.json({ formatted: formatStr });
+                    _.sendJSON(response, { formatted: formatStr });
                     return;
                 case 'math':
                     var str = data.str;
@@ -24,7 +25,14 @@ router.post('/', function (request, response, next) {
                         original: str,
                         formatted: formatStr
                     }));
-                    response.json({ formatted: formatStr });
+                    _.sendJSON(response, { formatted: formatStr });
+                    return;
+                case 'minify':
+                    var str = data.str;
+                    _.log({ request: 'Minify Code', code: str });
+                    var minStr = uglifyJS.minify(str, { fromString: true }).code;
+                    _.sendJSON(response, { result: minStr });
+                    _.log({ result: minStr });
                     return;
             }
         } else {

@@ -1,4 +1,3 @@
-const version = '1.0.1';
 var express = require("express");
 var app = express();
 var bodyParser = require('body-parser');
@@ -20,17 +19,18 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
-Object.keys(modules).forEach(function (key) {
+_.keys(modules).forEach(function (key) {
     app.use('/' + key, modules[key]);
+    _.log('Loaded Module "' + key + '"');
 });
 app.all(['/version', '/version/*'], function (req, res, next) {
-    const o = { version: version }
+    const o = { version: _.version }
     res.json(o);
-    _.l(o);
+    _.log(o);
 });
 
 app.listen(5000, function () {
-    _.log('UMA Client now running on port 5000\n');
+    _.log('UMA Client now running on port 5000 (' + _.getDateStr() + ')\n');
 });
 
 module.exports = app;
