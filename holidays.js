@@ -6,7 +6,8 @@ var router = express.Router();
 var staticData = require('./data/holidays.json');
 
 // router.post('/', holidayReq);
-router.get('/*', function (request, response, next) {
+router.all('/*', function (request, response, next) {
+    const start = _.getTime();
     try {
         var urlS = request.url.split('/'), urlInfo = [];
         for (var i = 0; i < urlS.length; i++)
@@ -14,9 +15,8 @@ router.get('/*', function (request, response, next) {
         if (urlInfo.length >= 1 && urlInfo[0].length <= 2) {
             var month = parseInt(urlInfo[0]);
             var year = (urlInfo.length >= 2) ? parseInt(urlInfo[1]) : new Date().getFullYear();
-            console.log('year', year);
             var hols = getHolidays(month, year);
-            _.sendJSON(response, hols);
+            _.sendJSON(response, hols, start);
             _.log(hols);
         } else {
             var h = [];
@@ -25,8 +25,9 @@ router.get('/*', function (request, response, next) {
             for (var i = 0; i < 12; i++)
                 h = h.concat(getHolidays(i, year));
             _.log('All Holidays in ' + year.toString(), h);
-            _.sendJSON(response, h);
+            _.sendJSON(response, h, start);
         }
+        next();
     } catch (e) {
         _.err(e);
         response.status(500).json(e);

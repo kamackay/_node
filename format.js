@@ -26,6 +26,7 @@ router.post('/', function (request, response, next) {
                         formatted: formatStr
                     }));
                     _.sendJSON(response, { formatted: formatStr });
+                    next();
                     return;
                 case 'minify':
                     var str = data.str;
@@ -33,6 +34,7 @@ router.post('/', function (request, response, next) {
                     var minStr = uglifyJS.minify(str, { fromString: true }).code;
                     _.sendJSON(response, { result: minStr });
                     _.log({ result: minStr });
+                    next();
                     return;
             }
         } else {
@@ -43,7 +45,7 @@ router.post('/', function (request, response, next) {
     } catch (e) {
         _.err(e);
         response.status(500).json(e);
-    }
+    } next();
 });
 
 module.exports = router;

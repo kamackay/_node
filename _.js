@@ -63,10 +63,11 @@ _.each = function (arr, func) {
     if (typeof arr !== 'array' || typeof func !== 'function') return;
     arr.forEach(func);
 }
-_.sendJSON = function (resp, obj) {
+_.sendJSON = function (resp, obj, startTime) {
     if (typeof obj !== 'object') return;
     obj.appVersion = _.version;
     resp.json(obj);
+    if (startTime) _.log('Response in ' + (new Date().getTime() - startTime).toString() + ' ms');
 }
 _.isArray = function (o) { return Array.isArray(o); }
 _.randInt = function (min, max) {
@@ -75,5 +76,6 @@ _.randInt = function (min, max) {
 _.randNum = function (min, max) {
     return (Math.random() * (max - min + 1)) + min;
 }
+_.getTime = function () { return new Date().getTime(); }
 
 module.exports = _;

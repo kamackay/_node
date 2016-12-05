@@ -21,7 +21,8 @@ router.post('/', function (request, response, next) {
                     _.log("Math Query", _.s({
                         question: mathQuery,
                         answer: answer
-                    }));
+                    })); 
+                    next();
                     return;
                 case 'formatMath':
                     var str = data.str;
@@ -31,6 +32,7 @@ router.post('/', function (request, response, next) {
                         formatted: formatStr
                     }));
                     _.sendJSON(response, { formatted: formatStr });
+                    next();
                     return;
             }
         } else {
@@ -42,6 +44,7 @@ router.post('/', function (request, response, next) {
         _.err(e);
         response.status(500).json(e);
     }
+    next();
 });
 
 module.exports = router;
