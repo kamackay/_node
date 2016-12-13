@@ -10,7 +10,6 @@ var modules = {
     auth: require('./auth')
 };
 const _ = require('./_');
-var https = require('https');
 const router = express.Router();
 
 app.use(function (req, res, next) {
