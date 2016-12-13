@@ -6,9 +6,11 @@ var modules = {
     format: require('./format'),
     holidays: require('./holidays'),
     convert: require('./convert'),
-    utils: require('./utils')
+    utils: require('./utils'),
+    auth: require('./auth')
 };
 const _ = require('./_');
+var https = require('https');
 const router = express.Router();
 
 app.use(function (req, res, next) {
