@@ -51,10 +51,15 @@ _.combineObj = function (a, b, overwrite) {
     });
     return a;
 };
+_.padNumStr = function (s, n) {
+    n = n || 2;
+    if (typeof s === 'string' && typeof n === 'number') while (s.length < n) s = "0" + s;
+    return s;
+};
 _.getDateStr = function (date) {
     date = date || new Date();
-    return (date.getFullYear() + "-" + (date.getMonth() + 1).toString() + "-" + date.getDate() + " "
-        + date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds());
+    return (date.getFullYear() + "-" + _.padNumStr((date.getMonth() + 1).toString()) + "-" + _.padNumStr(date.getDate()) + " "
+        + _.padNumStr(date.getHours()) + ":" + _.padNumStr(date.getMinutes()) + ":" + _.padNumStr(date.getSeconds()));
 }
 _.keys = function (obj) {
     return (typeof obj === 'object' ? Object.keys(obj) : []);

@@ -1,11 +1,13 @@
 var express = require("express");
+var bodyParser = require("body-parser");
 var app = express();
 var math = require('mathjs');
+app.use(bodyParser.json());
 var router = express.Router();
 const _ = require('./_');
 var request = require('request').defaults({ encoding: null });
 
-router.post(['*', '/', '/*'], function (request, response, next) {
+router.post(['*'], function (request, response, next) {
     try {
         const data = request.body;
         if (data && data.type) {
@@ -15,7 +17,6 @@ router.post(['*', '/', '/*'], function (request, response, next) {
                     convertImageToBase64(url, function (data) {
                         var o = { url: url, data64: data };
                         response.json(o);
-                        _.log(o);
                     });
                     return;
             }
