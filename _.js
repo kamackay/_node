@@ -1,6 +1,6 @@
 var jsFormatter = require('js-beautify');
 
-const _ = { version: '1.0.1' };
+const _ = { version: '1.0.2' };
 
 _.err = function (err) {
     if (typeof err !== 'undefined')
