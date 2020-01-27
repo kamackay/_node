@@ -1,0 +1,75 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: old-api-service
+  namespace: webpage
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: old-api-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: old-api
+  namespace: webpage
+  labels:
+    app: old-api-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: old-api-service
+  template:
+    metadata:
+      labels:
+        app: old-api-service
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: server
+          image: kamackay/old-api:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8080
+          livenessProbe:
+            httpGet:
+              path: /version
+              port: 8080
+            initialDelaySeconds: 1
+            periodSeconds: 1
+          readinessProbe:
+            httpGet:
+              path: /version
+              port: 8080
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            timeoutSeconds: 2
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: old-api-ingress
+  namespace: webpage
+  annotations:
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+spec:
+  tls:
+    - hosts:
+        - old.api.keithmackay.com
+      secretName: old-api-cert-secret
+  rules:
+    - host: old.api.keithmackay.com
+      http:
+        paths:
+          - backend:
+              serviceName: old-api-service
+              servicePort: 8080
+---

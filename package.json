@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Node.js Endpoint For keithmackay.com",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "start": "node ./index.js"
+  },
   "author": "Keith MacKay",
   "license": "ISC",
   "dependencies": {
